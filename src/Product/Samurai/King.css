@@ -1,0 +1,159 @@
+.king-cart{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 15px 0;
+}
+
+.king-cart h2{
+    font-size: 20px;
+    font-weight: 600;
+    color: #000;
+    line-height: 1.3;
+    letter-spacing: 0.7px;
+}
+
+.king-cart button{
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 8px 50px;
+    font-size: 16px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+
+/* Puppy */
+
+.puppy{
+    position: relative;
+}
+
+.puppy img{
+    width: 100%;
+}
+
+
+.photo h4{
+    color: #000;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    line-height: 1.5;
+    background: #fff;
+    position: absolute;
+    bottom: 0;
+    padding: 15px 30px;
+}
+
+
+
+
+/* About the samurai */
+
+.about-king{
+    display: flex;
+    margin-top: 25px;
+    gap: 2rem;
+    border-bottom: 2px solid #E4E4E4;
+}
+
+.about-king .detail-king h3{
+    color: #000;
+    font-size: 20px;
+    line-height: 1.4;
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    margin-bottom: 8px;
+}
+
+.about-king .detail-king .detail-text h1{
+    color: #656565;
+    font-size: 20px;
+    line-height: 1.4;
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    margin-bottom: 12px;
+}
+
+.about-king .detail-king .detail-text h4{
+    color: #656565;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+}
+
+
+.about-king .detail-king .detail-text p{
+    color: #656565;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+    margin-top: 20px;
+}
+
+
+.about-king .detail-king{
+    flex: 3;
+}
+
+.about-king .details{
+    flex: 2;
+}
+
+
+.about-king .details h3{
+    color: #000;
+    font-size: 20px;
+    line-height: 1.4;
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    margin-bottom: 8px;
+    text-align: end;
+}
+
+.about-king .details .detail-img{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+
+}
+
+
+.about-king .details .detail-size{
+    text-align: end;
+    margin-top: 40px;
+}
+
+
+.about-king .details .detail-size h5{
+    color: #000;
+    font-size: 20px;
+    line-height: 1.4;
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    margin-bottom: 8px;
+}
+
+
+.about-king .details .detail-size h4{
+    color: #656565;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+    margin-bottom: 8px;
+}
+
+
+.about-king .details .detail-size p{
+    color: #656565;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+}
