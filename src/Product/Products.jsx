@@ -48,6 +48,14 @@ export const Products = () => {
   }
 
 
+  const [showList, setShowList] = useState(false);
+
+
+  const toggleList = () =>{
+    setShowList(!showList);
+  }
+
+
 
   // Api fetch request
 
@@ -256,13 +264,17 @@ export const Products = () => {
                   <div className="premium-photo">Photography /<span>Premium Photos</span></div>
                   {/* Filter modal */}
                   <div className="filter-content" onClick={toggleFilter}>
-                  <BsFilterSquare className="filter-icon" size={24} />
-                  {filterModal && <Filter 
+                  <BsFilterSquare className="filter-icon" size={24} onClick={toggleList} />
+                  {showList &&  <Filter 
                   closeModal={() => setFilterModal(false)}
                   selectedCategories={selectedCategories}
                   categoryChange={categoryChange}
                   priceChange={priceChange}
+                  filterModal={filterModal}
+                  data={data}
                    />}
+                  
+                  
                   </div>
                   
                   <div className='sort'>

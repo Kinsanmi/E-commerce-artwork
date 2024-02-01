@@ -1,6 +1,10 @@
 import React from 'react';
+import './style/Filter.css'
 
-export const Filter = ({closeModal, categoryChange, selectedCategories, priceChange}) => {
+export const Filter = ({closeModal, categoryChange, selectedCategories, priceChange, data}) => {
+
+
+
   return (
     <section>
       <div>
