@@ -95,18 +95,64 @@
 
 .category{
     display: flex;
+    gap: 1rem;
 }
+
 
 
 .cat{
     flex: 1;
+    padding: 0 100px 0 0;
+}
+
+.cat .categories h3{
+    font-size: 17px;
+    font-weight: 500;
+    color: #000;
+    line-height: 1.2;
+    letter-spacing: 0.4px;
+}
+
+.cat .categories{
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 1px solid #C2C2C2;
+}
+
+.cat .categories .cat-list label{
+    display: flex;
+    margin: 20px 0;
+}
+
+
+/* Price filtering */
+
+.cat .price-range{
+    margin-top: 35px;
+}
+
+.cat .price-range h3{
+    font-size: 17px;
+    margin-top: 20px;
+    font-weight: 500;
+    color: #000;
+    line-height: 1.2;
+    letter-spacing: 0.4px;
+}
+
+
+.cat .price-range .price-list label{
+    display: flex;
+    margin: 20px 0;
 }
 
 
 /* Best seller */
 
 .seller{
-    flex: 3;
+    flex: 4;
 }
 
 .seller .seller-style{
@@ -175,7 +221,7 @@
     font-size: 15px;
     margin-bottom: 10px;
     letter-spacing: 0.6px;
-    line-height: 1.1;
+    line-height: 1.1;seller
 }
 
 
@@ -258,24 +304,60 @@
 }
 
 
-
+.filter-icon{
+    display: none;
+}
 
 
 @media screen and (max-width: 600px) {
-    .about-king {
-        flex-direction: column;
-        margin-top: 20px;
-        gap: 1rem;
+    .premium {
+        padding-top: 20px;
+        padding: 20px 0;
     }
 
-    .about-king .details h3 {
+    .premium .premium-photo {
+        font-size: 17px;
+    }
+
+    .premium .sort {
+        display: none;
+    }
+
+    .seller .seller-style {
+        grid-template-columns: repeat(1,1fr);
+        gap: 0.5rem;
+    }
+
+    .seller .seller-style .seller-type button {
         font-size: 16px;
-        text-align: start;
+        opacity: 1;
+        margin-top: 8px;
     }
 
-    .about-king .details .detail-img {
+    .seller .seller-style .seller-type .sales .deals .name h4 {
+        display: none;
+    }
+    .cat {
+        display: none;
+    }
+
+    .filter-icon{
+        display: inline-block;
+    }
+
+    .notify {
+        position: fixed;
         display: flex;
         align-items: center;
-        gap: 2rem;
+        justify-content: center;
+        top: 60px;
+        padding: 8px;
+        width: 95%;
+        border-radius: 2px;
+        background-color: #9B9B9B;
+        font-size: 16px;
+        font-weight: 500;
     }
+
+
 }

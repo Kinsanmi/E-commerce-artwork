@@ -1,4 +1,4 @@
-# A Poc of E-commerce website using Vite + React
+Artwork # A Poc of E-commerce website using Vite + React
 
 This application has a requirement of 3 and 7 uses stories
 Using database of product for a min of 20 products;

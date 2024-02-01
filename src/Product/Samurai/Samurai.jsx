@@ -10,7 +10,7 @@ export const Samurai = ({addToCart}) => {
               <section>
                 <div className="king-cart">
                   <h2>Samurai King Resting</h2>
-                  <button onClick={() => addToCart(product.id)}>Add to cart</button>
+                  <button className='btn' onClick={() => addToCart(product.id)}>Add to cart</button>
                 </div>
 
                 <div className="puppy">
@@ -19,6 +19,7 @@ export const Samurai = ({addToCart}) => {
                     <h4>Photo of the day</h4>
                   </div>
                 </div>
+                <h6 onClick={() => addToCart(product.id)}>Add to cart</h6>
 
                 <div className="about-king">
                   <div className="detail-king">

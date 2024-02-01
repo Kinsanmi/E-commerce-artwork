@@ -4,9 +4,9 @@ import './style/Product.css';
 import { Header } from '../Heading/Header';
 import { Samurai } from './Samurai/Samurai';
 import { Pagination } from './Pagination';
-import { CartDropDown } from './Cart/CartDropDown';
 import { IoIosArrowRoundUp, IoIosArrowRoundDown } from "react-icons/io";
-import { BsCurrencyDollar } from "react-icons/bs";
+import { BsCurrencyDollar, BsFilterSquare } from "react-icons/bs";
+import { Filter } from './Filter';
 
 
 export const Products = () => {
@@ -38,6 +38,14 @@ export const Products = () => {
   // Filtered by categories
   const [selectedCategories, setSelectedCategories] = useState([])
   const [priceRange, setPriceRange] = useState({min: 0, max: Infinity})
+
+
+  // Mobile filter
+  const [filterModal, setFilterModal] = useState(false);
+
+  const toggleFilter = () =>{
+    setFilterModal(!filterModal)
+  }
 
 
 
@@ -246,6 +254,17 @@ export const Products = () => {
               <div className="context">
                 <div className="premium">
                   <div className="premium-photo">Photography /<span>Premium Photos</span></div>
+                  {/* Filter modal */}
+                  <div className="filter-content" onClick={toggleFilter}>
+                  <BsFilterSquare className="filter-icon" size={24} />
+                  {filterModal && <Filter 
+                  closeModal={() => setFilterModal(false)}
+                  selectedCategories={selectedCategories}
+                  categoryChange={categoryChange}
+                  priceChange={priceChange}
+                   />}
+                  </div>
+                  
                   <div className='sort'>
                     <div className="sort-by"><IoIosArrowRoundUp /><IoIosArrowRoundDown />sort by</div>
                     <select className='sorting' onChange={(e) => handleChange(e.target.value)} value={sort}>
@@ -257,38 +276,49 @@ export const Products = () => {
 
                 <div className="category">
                   <div className="cat">
-                  Category
-                    <div>
-                      {Array.from(new Set(data.map((product) => product.productCategory))).map((category) => {
-                        return (
-                          <>
-                          <label htmlFor="" key={category}>
-                          <input type="checkbox" value={category} checked={selectedCategories.includes(category)} onChange={() => categoryChange(category)} />
-                          {category}
-                        </label>
-                          </>
-                        )
-                      })}
+                    <div className="categories">
+                      <h3>Category</h3>
+                      <div className='cat-list'>
+                        {Array.from(new Set(data.map((product) => product.productCategory))).map((category) => {
+                          return (
+                            <>
+                            <label htmlFor="" key={category}>
+                            <input type="checkbox" value={category} checked={selectedCategories.includes(category)} onChange={() => categoryChange(category)} />
+                            {category}
+                          </label>
+                            </>
+                          )
+                        })}
+                      </div>
                     </div>
+                    
 
                     <div className="price-range">
-                      Price range
-                      <div>
+                      <h3>Price range</h3>
+                      <div className='price-list'>
                         <label>
                           <input 
                           type="checkbox" 
                           value="0-500"
-                          onChange={() => priceChange(0,500)}
+                          onChange={() => priceChange(0,400)}
                           />
-                          $0-$500
+                          <span className='check-label'>Lower than $500</span>
+                        </label>
+                        <label>
+                          <input 
+                          type="checkbox" 
+                          value="0-500"
+                          onChange={() => priceChange(500,800)}
+                          />
+                          <span className='check-label'>$500-$800</span>
                         </label>
                         <label>
                           <input 
                           type="checkbox" 
                           value="500-1000"
-                          onChange={() => priceChange(500,1000)}
+                          onChange={() => priceChange(800,1000)}
                           />
-                          $500-$1000
+                          <span className='check-label'>$500-$1000</span>
                         </label>
                         <label>
                           <input 
@@ -296,7 +326,7 @@ export const Products = () => {
                           value="1000-2000"
                           onChange={() => priceChange(1000,2000)}
                           />
-                          More than $1000
+                          <span className='check-label'>More than $1000</span>
                         </label>
                       </div>
                     </div>
