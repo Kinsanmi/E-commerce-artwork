@@ -1,4 +1,44 @@
+
+.pages{
+    padding: 50px 0;
+}
+
+.pages .pagination{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pages .pagination .page-number{
+    border: none;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+
+.pages .pagination .page-digit a{
+    margin: 5px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
 .active{
-    color: red;
+    color: #000;
     font-weight: bold;
+}
+
+.inactive{
+    color: #B4B4B4;
+}
+
+.pages .pagination button{
+    border: none;
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    font-size: 20px;
+    cursor: pointer;
 }

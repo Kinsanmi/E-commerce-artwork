@@ -5,6 +5,9 @@ import { Header } from '../Heading/Header';
 import { Samurai } from './Samurai/Samurai';
 import { Pagination } from './Pagination';
 import { CartDropDown } from './Cart/CartDropDown';
+import { IoIosArrowRoundUp, IoIosArrowRoundDown } from "react-icons/io";
+import { BsCurrencyDollar } from "react-icons/bs";
+
 
 export const Products = () => {
 
@@ -13,7 +16,7 @@ export const Products = () => {
   const [error, setError] = useState("");
 
   // Sorting
-  const [sort, setSort] = useState('alphabetical');
+  const [sort, setSort] = useState('price');
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -34,10 +37,11 @@ export const Products = () => {
 
   // Filtered by categories
   const [selectedCategories, setSelectedCategories] = useState([])
-  const [filteredData, setFilteredData] = useState([]);
+  const [priceRange, setPriceRange] = useState({min: 0, max: Infinity})
 
 
 
+  // Api fetch request
 
   const fetchProduct = async()=>{
     setLoading(true);
@@ -47,7 +51,7 @@ export const Products = () => {
       setData(product);
       console.log(product);
     } catch (error) {
-      setError(error.message);
+      setError(`No connection`);
     }finally{
       setLoading(false);
     }
@@ -64,8 +68,10 @@ export const Products = () => {
     const productCart = cartItems.some(product => product.id === addProduct.id);
 
     if(!productCart){
-      setCartItems(prev => [...prev, addProduct])
-      setCartBadge(prevCount => prevCount + 1);
+      setCartItems([...cartItems, addProduct])
+      setCartBadge(cartBadge + 1);
+
+      setCartOpen(true);
 
       // show notification
       setNotification(`${addProduct.name} added to cart`)
@@ -85,6 +91,17 @@ export const Products = () => {
   }
 
 
+  // Store items in cart
+  useEffect(()=>{
+    setCartItems(localStorage.getItem("cartItems") ? JSON.parse(localStorage.getItem("cartItems")) : []);
+  },[])
+
+
+  useEffect(() =>{
+    localStorage.setItem("cartItems", JSON.stringify(cartItems))
+  },[cartItems])
+
+
 
   // Sorting
   const handleChange = (type) => {
@@ -96,16 +113,12 @@ export const Products = () => {
       sortedData.sort((a,b) => a.name.localeCompare(b.name));
     }else if(type === 'price'){
       sortedData.sort((a,b) => a.basePrice - b.basePrice);
-    } else{sortedData.sort((a,b)=>a.productCategory - b.productCategory)}
+    }
 
     setData(sortedData)
   }
 
-  // Pagination
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPost = data && data.slice(indexOfFirstPost , indexOfLastPost);
-
+  
 
 
   // change page
@@ -139,12 +152,16 @@ export const Products = () => {
     setCartBadge(0);
     setCartOpen(false);
     console.log("clearing cart...")
+
+    setNotification("Cart Cleared");
+    setTimeout(() =>{
+      setNotification('')
+    },2500);
   }
 
 
 
   // Select categories
-
   const categoryChange = (category) => {
     setSelectedCategories((prevCategories) => {
       if(prevCategories.includes(category)){
@@ -155,14 +172,31 @@ export const Products = () => {
     setCurrentPage(1);
   }
 
+
+  // Filtered by each selected category and price
   const filterData = data.filter((productData) => {
-    // Filtered by each selected category
-    return selectedCategories.length === 0 || selectedCategories.includes(productData.productCategory)
+    const categoryMatch =  selectedCategories.length === 0 || selectedCategories.includes(productData.productCategory);
+
+    const priceChecked = priceRange.min !== 0 || priceRange.max !== Infinity;
+
+    const priceMatch = (priceChecked && productData.basePrice >= priceRange.min && productData.basePrice <= priceRange.max ) || !priceChecked;
+
+    console.log(`Product:`,productData.name, 'Price range:', priceMatch);
+
+    return categoryMatch && priceMatch;
     
   })
 
+  const priceChange = (min, max) => {
+    setPriceRange({min:Number(min), max:Number(max)});
+  }
 
   
+  // Pagination
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPost = filterData && filterData.slice(indexOfFirstPost , indexOfLastPost);
+
 
 
 
@@ -180,75 +214,140 @@ export const Products = () => {
         }
 
         if(error){
-            return <div> Hmm...something seems to have gone wrong., {error}</div>
+            return(
+              <>
+              <div className="error">
+                <div className="error-state">
+                  <img src="https://media.istockphoto.com/id/1320496766/vector/no-wifi-area-sing-isolate-on-white-background-vector-illustration.jpg?s=612x612&w=0&k=20&c=DtWj62XGCHgKdp5i0akfxnbI4K8w0PsBKaef-7xt88s=" alt="No internet" />
+                  <h3>Something seems to have gone wrong.<br />{error}</h3>
+                </div>
+              </div>
+              </>
+            ) 
         }
 
 
         return (
             <>
-            <Header cartBadge={cartBadge} openCartDrop={() => setCartOpen(!cartOpen)} cartOpen={cartOpen} />
-            {cartOpen && <CartDropDown cartItem={cartItems} closeDropDown={closeDropDown} clearCart={clearCart} />}
-            <Samurai addToCart={addToCart} />
+            <Header 
+            cartBadge={cartBadge} 
+            openCartDrop={() => setCartOpen(!cartOpen)} 
+            cartOpen={cartOpen}
+            cartItem={cartItems} 
+            closeDropDown={closeDropDown} 
+            clearCart={clearCart}
+            setCartItems={setCartItems}
+
+            />
+
+            {/* {cartOpen && <CartDropDown cartItem={cartItems} closeDropDown={closeDropDown} clearCart={clearCart} />} */}
+            <Samurai addToCart={addToCart}/>
             <section>
               <div className="context">
                 <div className="premium">
-                  <div className="premium-photo">Photography / <span>Premium Photos</span></div>
+                  <div className="premium-photo">Photography /<span>Premium Photos</span></div>
                   <div className='sort'>
-                    <select onChange={(e) => handleChange(e.target.value)} value={sort}>
-                      <option disabled >Sort by:</option>
-                      <option value="price">Price</option>
+                    <div className="sort-by"><IoIosArrowRoundUp /><IoIosArrowRoundDown />sort by</div>
+                    <select className='sorting' onChange={(e) => handleChange(e.target.value)} value={sort}>
+                      <option value="price" defaultChecked>Price</option>
                       <option value="alphabetical">Alphabetical</option>
                     </select>
                   </div>
                 </div>
 
-                <div className="cat">
+                <div className="category">
+                  <div className="cat">
                   Category
-                  <div>
-                    {Array.from(new Set(data.map((product) => product.productCategory))).map((category) => {
-                      return (
-                        <>
-                        <label htmlFor="" key={category}>
-                        <input type="checkbox" value={category} checked={selectedCategories.includes(category)} onChange={() => categoryChange(category)} />
-                        {category}
-                       </label>
-                        </>
-                      )
-                    })}
+                    <div>
+                      {Array.from(new Set(data.map((product) => product.productCategory))).map((category) => {
+                        return (
+                          <>
+                          <label htmlFor="" key={category}>
+                          <input type="checkbox" value={category} checked={selectedCategories.includes(category)} onChange={() => categoryChange(category)} />
+                          {category}
+                        </label>
+                          </>
+                        )
+                      })}
+                    </div>
+
+                    <div className="price-range">
+                      Price range
+                      <div>
+                        <label>
+                          <input 
+                          type="checkbox" 
+                          value="0-500"
+                          onChange={() => priceChange(0,500)}
+                          />
+                          $0-$500
+                        </label>
+                        <label>
+                          <input 
+                          type="checkbox" 
+                          value="500-1000"
+                          onChange={() => priceChange(500,1000)}
+                          />
+                          $500-$1000
+                        </label>
+                        <label>
+                          <input 
+                          type="checkbox" 
+                          value="1000-2000"
+                          onChange={() => priceChange(1000,2000)}
+                          />
+                          More than $1000
+                        </label>
+                      </div>
+                    </div>
+                 </div>
+                
+
+                  <div className="seller">
+                    <div className="seller-style">
+                    {currentPost && currentPost.map((product, i)=>{
+                        return (
+                          <div className='seller-type'>
+                            <div key={i} className="sales">
+                                <div className="product-img">
+                                  <img src={product.featuredImage} alt="" />
+                                </div>
+                                <div className="deals">
+                                    <h4>Brand: {product.brand}</h4>
+                                    <div className="name">
+                                      <h1>{product.name}</h1>
+                                      <p><BsCurrencyDollar className="currency" />{`${product.basePrice}`}</p>
+                                      <h4>{product.storageOptions.join(', ')}</h4>
+                                    </div>
+
+                                  <div className="stock">
+                                    <h2>{product.inStock}</h2>
+                                    <span>Stock:{product.stock}</span>
+                                  </div>
+                                </div>
+                                
+                            </div>
+                            <button onClick={() => addToCart(product.id)}>Add to cart</button>
+                          </div>
+                            )
+                      })}
+                    </div>
+                    <Pagination 
+                    postsPerPage={postsPerPage}
+                    totalPost={data.length}
+                    paginate={paginate}
+                    previousPage={previousPage}
+                    nextPage={nextPage}
+                    currentPage={currentPage}
+                    />
                   </div>
                 </div>
 
-                <div className="seller">
-                  {filterData && filterData.map((product, i)=>{
-                      return (
-                        <>
-                        <div key={i} className="sales">
-                          <div className="deals">
-                            {product.productCategory}
-                          </div>
-                          <div>{product.name}</div>
-                          <h2>{product.basePrice}</h2>
-                          {/* <img src={product.featuredImage} alt={product.thumbnailImage} /> */}
-                          <h4>{product.storageOptions.join(', ')}</h4>
-                          <button onClick={() => addToCart(product.id)}>Add to cart</button>
-                        </div>
-
-                        </>
-                          )
-                    })}
-                </div>
-
                 {/* Logic for displaying pagination */}
-                <Pagination 
-                postsPerPage={postsPerPage}
-                totalPost={data.length}
-                paginate={paginate}
-                previousPage={previousPage}
-                nextPage={nextPage}
-                currentPage={currentPage}
-                />
+               
 
               </div>
+              {notification && <div className='notify'>{notification}</div>}
             </section>
             </>
         )
@@ -257,7 +356,6 @@ export const Products = () => {
   return (
     <>
     {feature()}
-    {notification && <div>{notification}</div>}
     </>
   )
 }

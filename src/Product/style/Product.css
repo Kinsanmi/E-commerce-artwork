@@ -41,9 +41,241 @@
 }
 
 
-
-.seller{
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
+.premium{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 25px;
+    padding: 25px 0;
 }
 
+
+.premium .premium-photo{
+    font-size: 20px;
+    color: #000;
+    font-weight: 500;
+    text-transform: capitalize;
+    line-height: 1.2;
+    letter-spacing: 0.5px;
+}
+.premium .premium-photo span{
+    color: #9B9B9B;
+}
+
+.premium .sort{
+    display: flex;
+}
+
+
+.premium .sort .sort-by{
+    font-size: 17px;
+    text-transform: capitalize;
+    color: #9B9B9B;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: 0.3px;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+
+
+.premium .sort .sorting{
+    border: none;
+    font-size: 17px;
+    width: 70px;
+    color: #000;
+}
+
+
+
+
+/* Categories filtering */
+
+.category{
+    display: flex;
+}
+
+
+.cat{
+    flex: 1;
+}
+
+
+/* Best seller */
+
+.seller{
+    flex: 3;
+}
+
+.seller .seller-style{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    align-items: center;
+    gap: 1.2rem;
+}
+
+
+
+
+.seller .seller-style .seller-type{
+    position: relative;
+    transition: 0.3s ease;
+    height: auto;
+}
+
+
+.seller .seller-style .seller-type .sales .product-img img{
+    margin-bottom: 8px;
+    
+}
+
+
+.seller .seller-style .seller-type .sales .deals h4{
+    color: #656565;
+    font-weight: 500;
+    font-size: 16px;
+    margin-bottom: 10px;
+    letter-spacing: 0.6px;
+    line-height: 1.1;
+    text-transform: capitalize;
+}
+
+
+.seller .seller-style .seller-type .sales .deals .name h1{
+    color: #656565;
+    font-weight: 500;
+    font-size: 18px;
+    margin-bottom: 10px;
+    letter-spacing: 0.6px;
+    line-height: 1.1;
+    text-transform: capitalize;
+}
+
+.seller .seller-style .seller-type .sales .deals .name p{
+    color: #656565;
+    font-weight: 500;
+    font-size: 16px;
+    margin-bottom: 10px;
+    letter-spacing: 0.6px;
+    line-height: 1.1;
+    display: flex;
+    align-items: center;
+}
+
+.seller .seller-style .seller-type .sales .deals .name p .currency{
+    color: #656565;
+    font-size: 13px;
+}
+
+.seller .seller-style .seller-type .sales .deals .name h4{
+    color: #cf665b;
+    font-weight: 500;
+    font-size: 15px;
+    margin-bottom: 10px;
+    letter-spacing: 0.6px;
+    line-height: 1.1;
+}
+
+
+.seller .seller-style .seller-type .sales .deals .stock h2{
+    font-size: 12px;
+    font-weight: 300;
+    color: #75757a;
+    text-decoration: line-through;
+}
+
+.deals .stock span{
+    color: #f68b1e;
+    background-color: #fef3e9;
+    padding: 3px;
+    font-size: 14px;
+    border-radius: 2px;
+    font-weight: 300;
+}
+
+.seller .seller-style .seller-type button{
+    width: 100%;
+    color: #fff;
+    background-color: #000;
+    text-transform: uppercase;
+    font-size: 17px;
+    font-weight: 500;
+    border: none;
+    padding: 7px 0;
+    border-radius: 2px;
+    opacity: 0;
+    transition: 0.2s ease;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+
+.seller .seller-style .seller-type:hover button{
+    opacity: 1;
+}
+
+
+/* Error state */
+
+.error{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+
+.error .error-state{
+    text-align: center;
+}
+.error .error-state img{
+    width: 60%;
+}
+
+.error .error-state h3{
+    margin: 15px;
+    font-size: 20px;
+    font-weight: 500;
+    text-transform: normal;
+    letter-spacing: 0.3px;
+}
+
+
+.notify{
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 60px;
+    padding: 8px;
+    width: 86.9%;
+    border-radius: 2px;
+    background-color: #9B9B9B;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+
+
+
+
+@media screen and (max-width: 600px) {
+    .about-king {
+        flex-direction: column;
+        margin-top: 20px;
+        gap: 1rem;
+    }
+
+    .about-king .details h3 {
+        font-size: 16px;
+        text-align: start;
+    }
+
+    .about-king .details .detail-img {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+    }
+}

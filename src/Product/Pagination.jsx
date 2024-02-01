@@ -20,11 +20,13 @@ export const Pagination = ({postsPerPage, totalPost, paginate, previousPage, nex
             <div className='pagination'>
               <button onClick={previousPage} disabled={currentPage === 1} className='page-number'><IoIosArrowBack /></button>
 
-              {pageNumber.map((numbers)=>{
-                return (
-                  <a key={numbers} onClick={() => paginate(numbers)} className={numbers === currentPage ? 'active' : ''}>{numbers}</a>
-                )
-              })}
+              <div className="page-digit">
+                {pageNumber.map((numbers)=>{
+                  return (
+                    <a key={numbers} onClick={() => paginate(numbers)} className={numbers === currentPage ? 'active' : 'inactive'}>{numbers}</a>
+                  )
+                })}
+              </div>
               <button onClick={nextPage} disabled={currentPage === pageNumber.length}><IoIosArrowForward /></button>
             </div>
         </div>

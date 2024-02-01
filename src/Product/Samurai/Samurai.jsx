@@ -1,7 +1,8 @@
 import React from 'react';
 import '../Samurai/King.css';
+import { productData } from '../../Database/Data';
 
-export const Samurai = () => {
+export const Samurai = ({addToCart}) => {
 
     const detailOnSamurai = () =>{
         return (
