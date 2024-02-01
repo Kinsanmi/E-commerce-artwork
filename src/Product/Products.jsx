@@ -7,6 +7,7 @@ import { Pagination } from './Pagination';
 import { IoIosArrowRoundUp, IoIosArrowRoundDown } from "react-icons/io";
 import { BsCurrencyDollar, BsFilterSquare } from "react-icons/bs";
 import { Filter } from './Filter';
+import {PropagateLoader} from 'react-spinners'
 
 
 export const Products = () => {
@@ -220,10 +221,13 @@ export const Products = () => {
         if(loading){
             return (
                 <>
-                <div className="load">
-                    <div className="loading"></div>
-                    <div className="loading"></div>
-                    <div className="loading"></div>
+                <div className="load">   
+                  <PropagateLoader
+                    color="#000"
+                    loading
+                    size={30}
+                    speedMultiplier={1}
+                  />
                 </div>
                 </>
             )
